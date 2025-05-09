@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hospital Management System</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+       margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      background-image: url('/Users/kalkivarthanbaskaran/Desktop/hms/hms12.jpg'); /* Replace with the path to your image */
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed; /* Keep the background fixed */
+    }
+    
+    header {
+      background-color: #669999;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+    
+    nav ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+    }
+    
+    nav ul li {
+      margin: 0 15px;
+    }
+    
+    
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    
+    main {
+      padding: 20px;
+    }
+    
+    section {
+      margin-bottom: 40px;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      border: 1px solid black; /* Set table border to black */
+    }
+    
+    table, th, td {
+      border: 1px solid black; /* Set table border to black */
+    }
+    
+    th, td {
+      padding: 8px;
+      text-align: left;
+    }
+    
+    button {
+      background-color: #669999;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+    }
+    
+    button:hover {
+      background-color: #669999;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    .error {
+      color: red;
+    }
+    
+    .icon {
+      margin-right: 8px;
+    }
+    
+    .input-block {
+      margin: 20px 0;
+    }
+    
+    .form-container {
+      margin-top: 20px;
+    }
+    
+    .form-container input, .form-container select {
+      margin: 10px 0;
+      padding: 8px;
+      width: 100%;
+    }
+    
+
+    .form-container input, .form-container select {
+      margin: 10px 0;
+      padding: 8px;
+      width: 100%;
+    }
+  
+  </style>
+</head>
+<body>
+
+  <!-- Main Content Page -->
+  <div id="mainPage">
+    <header>
+      <h1>Hospital Management System</h1>
+      <nav>
+        <ul>
+          <li><a href="javascript:void(0);" onclick="showSection('home')">Home</a></li>
+          <li><a href="javascript:void(0);" onclick="showSection('patients')">Patients</a></li>
+          <li><a href="javascript:void(0);" onclick="showSection('doctors')">Doctors</a></li>
+          <li><a href="javascript:void(0);" onclick="showSection('appointments')">Appointments</a></li>
+          <li><a href="javascript:void(0);" onclick="showSection('documents')">Documents</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Home Page -->
+      <section id="home">
+        
+        <h2>Welcome to the Hospital Management System</h2>
+        <p>Manage your hospital records with ease.</p>
+        <p>Click on "Patients", "Doctors", or "Appointments" to manage different sections of the hospital.</p>
+
+        <h3>Contact Information</h3>
+        <p><strong>Location:</strong> 123 Health St., City, Country</p>
+        <p><strong>Toll-Free Number:</strong> 1-800-123-4567</p>
+        <p><strong>Email:</strong> info@hospital.com</p>
+
+        <h3>Medical Assistance Available 24/7</h3>
+        <p>If you need urgent medical assistance, please reach out to us at the above contact details.</p>
+      </section>
+
+      <!-- Patients Section -->
+      <section id="patients" class="hidden">
+        <h2><i class="fas fa-users icon"></i> Patient Records</h2>
+        <button onclick="togglePatientForm()">Add Patient</button>
+        <div id="patientForm" class="form-container hidden">
+          <h3>Add Patient</h3>
+          <input type="text" id="patientName" placeholder="Patient Name" />
+          <input type="number" id="patientAge" placeholder="Patient Age" />
+          <select id="patientGender">
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+          <input type="text" id="patientDisease" placeholder="Disease" />
+          <button onclick="addPatient()">Add</button>
+        </div>
+        <table id="patientTable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Age</th>
+              <th>Gender</th>
+              <th>Disease</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Patient records will be listed here -->
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Doctors Section -->
+      <section id="doctors" class="hidden">
+        <h2><i class="fas fa-user-md icon"></i> Doctor Information</h2>
+        <button onclick="toggleDoctorForm()">Add Doctor</button>
+        <div id="doctorForm" class="form-container hidden">
+          <h3>Add Doctor</h3>
+          <input type="text" id="doctorName" placeholder="Doctor Name" />
+          <select id="doctorSpecialization">
+            <option value="">Select Specialization</option>
+            <option value="Cardiology">Cardiology</option>
+            <option value="Neurology">Neurology</option>
+            <option value="Pediatrics">Pediatrics</option>
+            <option value="Orthopedics">Orthopedics</option>
+            <option value="General Surgery">General Surgery</option>
+            <option value="Dermatology">Dermatology</option>
+            <!-- Add more options as needed -->
+          </select>
+          <button onclick="addDoctor()">Add</button>
+        </div>
+        <table id="doctorTable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Specialization</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Doctor details will be listed here -->
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Appointments Section -->
+      <section id="appointments" class="hidden">
+        <h2><i class="fas fa-calendar-check icon"></i> Appointments</h2>
+        <button onclick="toggleAppointmentForm()">Schedule Appointment</button>
+        <div id="appointmentForm" class="form-container hidden">
+          <h3>Schedule Appointment</h3>
+          <input type="text" id="appointmentPatient" placeholder="Patient Name" />
+          <input type="text" id="appointmentDoctor" placeholder="Doctor Name" />
+          <input type="date" id="appointmentDate" />
+          <input type="time" id="appointmentTime" />
+          <button onclick="scheduleAppointment()">Schedule</button>
+        </div>
+        <p id="appointmentError" class="error"></p>
+        <table id="appointmentTable">
+          <thead>
+            <tr>
+              <th>Patient Name</th>
+              <th>Doctor Name</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Appointment records will be listed here -->
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Documents Section -->
+      <section id="documents" class="hidden">
+        <h2><i class="fas fa-search icon"></i> Search Documents</h2>
+        <div class="input-block">
+          <h3>Search Patients</h3>
+          <input type="text" id="patientSearch" placeholder="Enter Patient Name, Age, or Disease" onkeyup="renderDetails()">
+        </div>
+        <div class="input-block">
+          <h3>Search Doctors</h3>
+          <input type="text" id="doctorSearch" placeholder="Enter Doctor Name" onkeyup="renderDetails()">
+        </div>
+        <div class="input-block">
+          <h3>Search Appointments</h3>
+          <input type="text" id="appointmentSearch" placeholder="Enter Date and Time" onkeyup="renderDetails()">
+        </div>
+
+        <div id="patientDetails" class="hidden">
+          <h3>Patient Details</h3>
+          <table id="patientDetailsTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Disease</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Filtered patient details will be listed here -->
+            </tbody>
+          </table>
+        </div>
+
+        <div id="doctorDetails" class="hidden">
+          <h3>Doctor Details</h3>
+          <table id="doctorDetailsTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Specialization</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Filtered doctor details will be listed here -->
+            </tbody>
+          </table>
+        </div>
+
+        <div id="appointmentDetails" class="hidden">
+          <h3>Appointment Details</h3>
+          <table id="appointmentDetailsTable">
+            <thead>
+              <tr>
+                <th>Patient Name</th>
+                <th>Doctor Name</th>
+                <th>Date</th>
+                <th>Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Filtered appointment details will be listed here -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Manage Local Storage
+function saveDataToLocalStorage() {
+  localStorage.setItem('patients', JSON.stringify(patients));
+  localStorage.setItem('doctors', JSON.stringify(doctors));
+  localStorage.setItem('appointments', JSON.stringify(appointments));
+}
+
+function loadDataFromLocalStorage() {
+  patients = JSON.parse(localStorage.getItem('patients')) || [];
+  doctors = JSON.parse(localStorage.getItem('doctors')) || [];
+  appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+}
+
+    // Sample data arrays
+    let patients = [];
+    let doctors = [];
+    let appointments = [];
+    loadDataFromLocalStorage();
+
+    // Function to show the corresponding section
+    function showSection(sectionId) {
+      // Hide all sections
+      document.querySelectorAll('section').forEach(section => {
+        section.classList.add('hidden');
+      });
+
+      // Show the selected section
+      document.getElementById(sectionId).classList.remove('hidden');
+
+      // Render data based on the section
+      if (sectionId === 'patients') {
+        renderPatients();
+      } else if (sectionId === 'doctors') {
+        renderDoctors();
+      } else if (sectionId === 'appointments') {
+        renderAppointments();
+      } else if (sectionId === 'documents') {
+        renderDetails();
+      }
+    }
+
+    // Function to render patients
+    function renderPatients() {
+      const patientTable = document.getElementById('patientTable').getElementsByTagName('tbody')[0];
+      patientTable.innerHTML = ''; // Clear the table before rendering
+      patients.forEach(patient => {
+        const row = patientTable.insertRow();
+        row.insertCell(0).textContent = patient.id;
+        row.insertCell(1).textContent = patient.name;
+        row.insertCell(2).textContent = patient.age;
+        row.insertCell(3).textContent = patient.gender;
+        row.insertCell(4).textContent = patient.disease;
+        const actionCell = row.insertCell(5);
+        actionCell.innerHTML = '<button onclick="deletePatient(' + patient.id + ')">Delete</button>';
+      });
+    }
+
+    // Function to render doctors
+    function renderDoctors() {
+      const doctorTable = document.getElementById('doctorTable').getElementsByTagName('tbody')[0];
+      doctorTable.innerHTML = ''; // Clear the table before rendering
+      doctors.forEach(doctor => {
+        const row = doctorTable.insertRow();
+        row.insertCell(0).textContent = doctor.id;
+        row.insertCell(1).textContent = doctor.name;
+        row.insertCell(2).textContent = doctor.specialization;
+        const actionCell = row.insertCell(3);
+        actionCell.innerHTML = '<button onclick="deleteDoctor(' + doctor.id + ')">Delete</button>';
+      });
+    }
+
+    // Function to render appointments
+    function renderAppointments() {
+      const appointmentTable = document.getElementById('appointmentTable').getElementsByTagName('tbody')[0];
+      appointmentTable.innerHTML = ''; // Clear the table before rendering
+      appointments.forEach(appointment => {
+        const row = appointmentTable.insertRow();
+        row.insertCell(0).textContent = appointment.patientName;
+        row.insertCell(1).textContent = appointment.doctorName;
+        row.insertCell(2).textContent = appointment.date;
+        row.insertCell(3).textContent = appointment.time;
+        const actionCell = row.insertCell(4);
+        actionCell.innerHTML = '<button onclick="deleteAppointment(' + appointment.id + ')">Delete</button>';
+      });
+    }
+
+    // Function to render filtered details
+    function renderDetails() {
+      const patientSearch = document.getElementById('patientSearch').value.toLowerCase();
+      const doctorSearch = document.getElementById('doctorSearch').value.toLowerCase();
+      const appointmentSearch = document.getElementById('appointmentSearch').value.toLowerCase();
+
+      // Filter patients based on search input
+      const filteredPatients = patients.filter(patient => 
+        patient.name.toLowerCase().includes(patientSearch) || 
+        patient.age.toString().includes(patientSearch) || 
+        patient.disease.toLowerCase().includes(patientSearch)
+      );
+
+      const patientDetailsTable = document.getElementById('patientDetailsTable').getElementsByTagName('tbody')[0];
+      patientDetailsTable.innerHTML = '';
+      filteredPatients.forEach(patient => {
+        const row = patientDetailsTable.insertRow();
+        row.insertCell(0).textContent = patient.id;
+        row.insertCell(1).textContent = patient.name;
+        row.insertCell(2).textContent = patient.age;
+        row.insertCell(3).textContent = patient.gender;
+        row.insertCell(4).textContent = patient.disease;
+      });
+      
+      // Show patient details if there are matching results
+      document.getElementById('patientDetails').classList.toggle('hidden', filteredPatients.length === 0);
+
+      // Filter doctors based on search input
+      const filteredDoctors = doctors.filter(doctor => 
+        doctor.name.toLowerCase().includes(doctorSearch)
+      );
+
+      const doctorDetailsTable = document.getElementById('doctorDetailsTable').getElementsByTagName('tbody')[0];
+      doctorDetailsTable.innerHTML = '';
+      filteredDoctors.forEach(doctor => {
+        const row = doctorDetailsTable.insertRow();
+        row.insertCell(0).textContent = doctor.id;
+        row.insertCell(1).textContent = doctor.name;
+        row.insertCell(2).textContent = doctor.specialization;
+      });
+
+      // Show doctor details if there are matching results
+      document.getElementById('doctorDetails').classList.toggle('hidden', filteredDoctors.length === 0);
+
+      // Filter appointments based on search input
+      const filteredAppointments = appointments.filter(appointment => 
+        appointment.patientName.toLowerCase().includes(appointmentSearch) || 
+        appointment.doctorName.toLowerCase().includes(appointmentSearch) || 
+        appointment.date.includes(appointmentSearch) || 
+        appointment.time.includes(appointmentSearch)
+      );
+
+      const appointmentDetailsTable = document.getElementById('appointmentDetailsTable').getElementsByTagName('tbody')[0];
+      appointmentDetailsTable.innerHTML = '';
+      filteredAppointments.forEach(appointment => {
+        const row = appointmentDetailsTable.insertRow();
+        row.insertCell(0).textContent = appointment.patientName;
+        row.insertCell(1).textContent = appointment.doctorName;
+        row.insertCell(2).textContent = appointment.date;
+        row.insertCell(3).textContent = appointment.time;
+      });
+
+      // Show appointment details if there are matching results
+      document.getElementById('appointmentDetails').classList.toggle('hidden', filteredAppointments.length === 0);
+    }
+
+    // Function to toggle patient form visibility
+    function togglePatientForm() {
+      const form = document.getElementById('patientForm');
+      form.classList.toggle('hidden');
+    }
+
+    // Function to toggle doctor form visibility
+    function toggleDoctorForm() {
+      const form = document.getElementById('doctorForm');
+      form.classList.toggle('hidden');
+    }
+
+    // Function to toggle appointment form visibility
+    function toggleAppointmentForm() {
+      const form = document.getElementById('appointmentForm');
+      form.classList.toggle('hidden');
+    }
+
+    // Function to add a patient
+    // Function to add a patient
+    function addPatient() {
+      const name = document.getElementById('patientName').value;
+      const age = document.getElementById('patientAge').value;
+      const gender = document.getElementById('patientGender').value;
+      const disease = document.getElementById('patientDisease').value;
+    
+      if (!name || !age || !gender || !disease) {
+        alert('Please fill in all fields');
+        return;
+      }
+    
+      const newPatient = {
+        id: patients.length + 1,
+        name,
+        age,
+        gender,
+        disease
+      };
+      
+      patients.push(newPatient);
+      saveDataToLocalStorage(); // Save to localStorage
+      renderPatients();
+      togglePatientForm();
+      document.getElementById('patientName').value = '';
+      document.getElementById('patientAge').value = '';
+      document.getElementById('patientGender').value = '';
+      document.getElementById('patientDisease').value = '';
+    }
+    
+
+
+    // Function to delete a patient
+    function deletePatient(id) {
+      patients = patients.filter(patient => patient.id !== id);
+      saveDataToLocalStorage(); // Save changes to localStorage
+      renderPatients(); // Update UI
+    }
+    
+
+    // Function to add a doctor
+    // Function to add a doctor
+function addDoctor() {
+  const name = document.getElementById('doctorName').value;
+  const specialization = document.getElementById('doctorSpecialization').value;
+  if (!name || !specialization) {
+    alert('Please fill in all fields');
+    return;
+  }
+  const newDoctor = {
+    id: doctors.length + 1,
+    name,
+    specialization
+  };
+  doctors.push(newDoctor);
+  renderDoctors();
+  saveDataToLocalStorage();
+  toggleDoctorForm();
+
+  // Clear the form fields after adding the doctor
+  document.getElementById('doctorName').value = '';
+  document.getElementById('doctorSpecialization').value = '';
+}
+
+
+    // Function to delete a doctor
+    function deleteDoctor(id) {
+      doctors = doctors.filter(doctor => doctor.id !== id);
+      saveDataToLocalStorage();
+      renderDoctors();
+    }
+
+    // Function to schedule an appointment
+    // Function to schedule an appointment
+// Function to schedule an appointment with conflict check
+function scheduleAppointment() {
+  const patientName = document.getElementById('appointmentPatient').value;
+  const doctorName = document.getElementById('appointmentDoctor').value;
+  const date = document.getElementById('appointmentDate').value;
+  const time = document.getElementById('appointmentTime').value;
+
+  if (!patientName || !doctorName || !date || !time) {
+    alert('Please fill in all fields');
+    return;
+  }
+
+  // Check if doctor is already booked at the same time
+  const doctorConflict = appointments.some(appointment =>
+    appointment.doctorName === doctorName && appointment.date === date && appointment.time === time
+  );
+
+  // Check if patient is already scheduled at the same time
+  const patientConflict = appointments.some(appointment =>
+    appointment.patientName === patientName && appointment.date === date && appointment.time === time
+  );
+
+  if (doctorConflict) {
+    alert('Doctor is already appointed for this time.');
+    return;
+  }
+
+  if (patientConflict) {
+    alert('Patient is already scheduled for this time.');
+    return;
+  }
+
+  // Proceed with appointment if no conflicts
+  const newAppointment = {
+    id: appointments.length + 1,
+    patientName,
+    doctorName,
+    date,
+    time
+  };
+
+  appointments.push(newAppointment);
+  renderAppointments();
+  saveDataToLocalStorage();
+  toggleAppointmentForm();
+
+  // Clear the form fields after scheduling the appointment
+  document.getElementById('appointmentPatient').value = '';
+  document.getElementById('appointmentDoctor').value = '';
+  document.getElementById('appointmentDate').value = '';
+  document.getElementById('appointmentTime').value = '';
+}
+
+
+
+    // Function to delete an appointment
+    function deleteAppointment(id) {
+      appointments = appointments.filter(appointment => appointment.id !== id);
+      renderAppointments();
+      saveDataToLocalStorage(); 
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      loadDataFromLocalStorage(); // Load data on page load
+      renderPatients();
+      renderDoctors();
+      renderAppointments();
+    });
+  </script>
+</body>
+</html>
